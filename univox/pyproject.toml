@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling>=1.25.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "univox"
+version = "0.1.0"
+description = "Univox: Provider-backed STT engine for Pipecat with pipeline-side VAD"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "BSD-2-Clause" }
+authors = [{ name = "Your Name" }]
+keywords = ["pipecat", "stt", "speech-to-text", "vad", "deepgram"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: BSD License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Multimedia :: Sound/Audio :: Speech"
+]
+
+# Core dependency: Pipecat framework
+dependencies = [
+  "pipecat-ai[deepgram,runner,webrtc]>=0.0.86",
+  "pvcobra>=2.1.0",
+]
+
+[project.optional-dependencies]
+# Pull provider/VAD extras through Pipecat to avoid duplicating SDK pins
+deepgram = ["pipecat-ai[deepgram]"]
+silero = ["pipecat-ai[silero]"]
+all = ["pipecat-ai[deepgram,silero]"]
+cobra = ["pvcobra"]
+
+[project.urls]
+Homepage = "https://github.com/your-org/univox"
+Issues = "https://github.com/your-org/univox/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/univox"]
